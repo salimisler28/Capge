@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { BottomNavigation } from "./BottomNavigation";
-import { PostsDetail } from "../screens/chardetail/PostsDetail";
+import { CharDetailScreen } from "../screens/chardetail/PostsDetail";
 import { LoginScreen } from "../screens/login/LoginScreen";
 import { RegisterScreen } from "../screens/register/RegisterScreen";
 import { Bottom, CharDetail, Login, Register } from "../constants/Screens";
@@ -30,7 +30,7 @@ export const StackNavigation = ({ isLoggedIn }) => {
         }} />
       <Stack.Screen
         name={CharDetail}
-        component={PostsDetail}
+        component={CharDetailScreen}
         options={{
           headerShown: false,
         }} />
