@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "173909284455",
+    "project_id": "react-native-learn-bef02",
+    "storage_bucket": "react-native-learn-bef02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173909284455:android:64b84702754a26de65e6c2",
+        "android_client_info": {
+          "package_name": "com.capge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "173909284455-brdj7tho9e805j82f4o84268mkj9bd36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5dyMtQ5eiIE8OBt7ppaUuG3ZC89tp_U8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "173909284455-brdj7tho9e805j82f4o84268mkj9bd36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
