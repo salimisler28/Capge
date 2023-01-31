@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { BottomNavigation } from "./BottomNavigation";
-import { PostsDetail } from "../screens/postdetail/PostsDetail";
+import { PostsDetail } from "../screens/chardetail/PostsDetail";
 import { LoginScreen } from "../screens/login/LoginScreen";
 import { RegisterScreen } from "../screens/register/RegisterScreen";
 import { Bottom, CharDetail, Login, Register } from "../constants/Screens";

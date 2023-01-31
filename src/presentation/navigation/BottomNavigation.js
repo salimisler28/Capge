@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FavsScreen } from "../screens/favs/FavsScreen";
-import { CharacterScreen } from "../screens/posts/CharacterScreen";
+import { CharacterScreen } from "../screens/chars/CharacterScreen";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Character, Favs } from "../constants/Screens";
 

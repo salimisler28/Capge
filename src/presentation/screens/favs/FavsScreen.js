@@ -1,6 +1,6 @@
 import { FlatList, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import { CharItem } from "../posts/CharItem";
+import { CharItem } from "../chars/CharItem";
 import React from "react";
 import { CharDetail } from "../../constants/Screens";
 
