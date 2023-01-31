@@ -4,32 +4,32 @@ import { BottomNavigation } from "./BottomNavigation";
 import { PostsDetail } from "../screens/postdetail/PostsDetail";
 import { LoginScreen } from "../screens/login/LoginScreen";
 import { RegisterScreen } from "../screens/register/RegisterScreen";
+import { Bottom, CharDetail, Login, Register } from "../constants/Screens";
 
 const Stack = createStackNavigator();
 
 export const StackNavigation = ({ isLoggedIn }) => {
   return (
     <Stack.Navigator initialRouteName={
-      isLoggedIn ? "Bottom" : "Login"
+      isLoggedIn ? Bottom : Login
     }>
       <Stack.Screen
-        name="Login"
+        name={Login}
         component={LoginScreen}
         options={{
           headerShown: false,
         }} />
       <Stack.Screen
-        name="Register"
+        name={Register}
         component={RegisterScreen} />
       <Stack.Screen
-        name="Bottom"
+        name={Bottom}
         component={BottomNavigation}
         options={{
           headerShown: false,
         }} />
-
       <Stack.Screen
-        name="PostDetail"
+        name={CharDetail}
         component={PostsDetail}
         options={{
           headerShown: false,

@@ -2,6 +2,7 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { IconButton } from "@react-native-material/core";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { StyleSheet } from "react-native";
 
 const getColor = (status) => {
   switch (status) {
@@ -22,23 +23,16 @@ export const CharItem = (props) => {
   const isFavVisible = props.isFavVisible;
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View
-        style={{ flexDirection: "row", backgroundColor: "white", margin: 10, borderRadius: 12, overflow: "hidden" }}>
+    <TouchableOpacity onPress={onPress} style={{ margin: 10 }}>
+      <View style={[styles.container, {}]}>
         <Image
           source={{ uri: char.image }}
-          style={{ width: 150, aspectRatio: 1 }}
+          style={[styles.image, {}]}
         />
 
-        <View style={{ flexDirection: "column", flex: 1 }}>
-          <View style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", margin: 10, flex: 1 }}
-                  ellipsizeMode="tail"
-                  numberOfLines={1}>
+        <View style={[styles.rightSide, {}]}>
+          <View style={[styles.header]}>
+            <Text style={{ fontSize: 18, fontWeight: "bold", flex: 1 }} ellipsizeMode="tail" numberOfLines={1}>
               {char.name}
             </Text>
 
@@ -46,21 +40,52 @@ export const CharItem = (props) => {
               <IconButton
                 icon={props => <Icon name={isFav ? "favorite" : "favorite-border"} {...props} />}
                 onPress={onFavClick}
-              />
-              :
-              ""}
+              /> : ""}
           </View>
 
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View style={{
               width: 10,
               aspectRatio: 1,
-              backgroundColor: getColor(char.status), borderRadius: 12, marginStart: 10,
+              backgroundColor: getColor(char.status),
+              borderRadius: 12,
             }} />
             <Text style={{ marginStart: 8 }}>{char.status}</Text>
           </View>
+
+          <Text style={{ fontWeight: "bold", opacity: 0.66, marginTop: 8 }} numberOfLines={1} ellipsizeMode="tail">
+            Last known location:
+          </Text>
+          <Text style={{ color: "black", fontWeight: "bold" }}>{char.location.name}</Text>
+
+          <Text style={{ fontWeight: "bold", opacity: 0.66, marginTop: 8 }} numberOfLines={1} ellipsizeMode="tail">First
+            seen in:</Text>
+          <Text style={{ color: "black", fontWeight: "bold" }}>{char.origin.name}</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  image: {
+    width: 175,
+    aspectRatio: 1,
+  },
+  rightSide: {
+    flexDirection: "column",
+    flex: 1,
+    marginStart: 10,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+});

@@ -2,6 +2,7 @@ import { FlatList, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { CharItem } from "../posts/CharItem";
 import React from "react";
+import { CharDetail } from "../../constants/Screens";
 
 export const FavsScreen = ({ navigation }) => {
   const favs = useSelector(state => state.favs);
@@ -25,7 +26,7 @@ export const FavsScreen = ({ navigation }) => {
 
             }}
             onClick={(char) => {
-              navigation.navigate("PostDetail", { char: char });
+              navigation.navigate(CharDetail, { char: char });
             }}
           />;
         }} />

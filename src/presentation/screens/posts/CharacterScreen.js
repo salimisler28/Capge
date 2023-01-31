@@ -4,6 +4,7 @@ import { getCharsByPageNumber } from "../../../data/network/CharacterApi";
 import { CharItem } from "./CharItem";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_FAV, REMOVE_FAV } from "../../redux/FavsActions";
+import { CharDetail } from "../../constants/Screens";
 
 const newPageLoadingComponent = () => {
   return (
@@ -13,7 +14,7 @@ const newPageLoadingComponent = () => {
   );
 };
 
-export const PostsScreen = ({ navigation }) => {
+export const CharacterScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const favs = useSelector(state => state.favs);
 
@@ -70,7 +71,7 @@ export const PostsScreen = ({ navigation }) => {
               isFavVisible={true}
               isFav={favs.favs.some(fav => fav.id === item.id)}
               onClick={(char) => {
-                navigation.navigate("PostDetail", { char: char });
+                navigation.navigate(CharDetail, { char: char });
               }}
               onFavClick={(char) => {
                 const isFav = favs.favs.some(item => item.id === char.id);
