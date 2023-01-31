@@ -1,18 +1,26 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FavsScreen } from "../screens/favs/FavsScreen";
 import { PostsScreen } from "../screens/posts/PostsScreen";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Bottom = createBottomTabNavigator();
 
 export const BottomNavigation = () => {
-  return (
-    <Bottom.Navigator>
-      <Bottom.Screen component={PostsScreen} name="Posts" options={{
+  return (<Bottom.Navigator>
+    <Bottom.Screen
+      component={PostsScreen}
+      name="Characters"
+      options={{
         headerShown: false,
-      }} />
-      <Bottom.Screen component={FavsScreen} name="Favs" options={{
+        tabBarIcon: (props => <Icon name="home" {...props} />),
+      }}
+    />
+    <Bottom.Screen
+      component={FavsScreen}
+      name="Favorites"
+      options={{
         headerShown: false,
+        tabBarIcon: (props => <Icon name="favorite" {...props} />)
       }} />
-    </Bottom.Navigator>
-  );
+  </Bottom.Navigator>);
 };
