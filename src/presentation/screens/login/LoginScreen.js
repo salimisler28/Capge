@@ -1,6 +1,6 @@
 import { Text, ToastAndroid, TouchableOpacity, View } from "react-native";
 import { Button, TextInput } from "@react-native-material/core";
-import { firebaseLoginWithEmailAndPassword } from "../../firebase/Auth";
+import { firebaseLoginWithEmailAndPassword } from "../../../data/firebase/Auth";
 import { useEffect, useState } from "react";
 import { emailValidator, passwordValidator } from "../../validation/Validators";
 

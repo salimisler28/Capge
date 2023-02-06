@@ -9,3 +9,8 @@ export const createAccountWithEmailAndPassword = (email, password) => {
   return auth()
     .createUserWithEmailAndPassword(email, password);
 };
+
+export const getCurrentUser = () => {
+  return auth()
+    .currentUser;
+};

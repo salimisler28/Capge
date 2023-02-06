@@ -13,3 +13,9 @@ export const sendPost = function(title, body, userId) {
       userId: userId,
     });
 };
+
+
+export const getCommentsById = (id) => {
+  return axios
+    .get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+};

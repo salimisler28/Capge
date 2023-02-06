@@ -2,7 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FavsScreen } from "../screens/favs/FavsScreen";
 import { CharacterScreen } from "../screens/chars/CharacterScreen";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Character, Favs } from "../constants/Screens";
+import { Account, Character, Favs } from "../constants/Screens";
+import { AccountScreen } from "../screens/account/AccountScreen";
 
 const Bottom = createBottomTabNavigator();
 
@@ -22,6 +23,13 @@ export const BottomNavigation = () => {
       options={{
         headerShown: false,
         tabBarIcon: (props => <Icon name="favorite" {...props} />),
+      }} />
+    <Bottom.Screen
+      component={AccountScreen}
+      name={Account}
+      options={{
+        headerShown: false,
+        tabBarIcon: (props => <Icon name="person" {...props} />),
       }} />
   </Bottom.Navigator>);
 };

@@ -11,7 +11,6 @@ export const FavsScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Text>deneme</Text>
       <FlatList
         data={favs.favs}
         keyExtractor={(item, index) => {

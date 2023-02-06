@@ -32,7 +32,7 @@ export const StackNavigation = ({ isLoggedIn }) => {
         name={CharDetail}
         component={CharDetailScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
         }} />
     </Stack.Navigator>
   );

@@ -1,9 +1,9 @@
 import { ToastAndroid, View } from "react-native";
 import { Button, TextInput } from "@react-native-material/core";
 import { useEffect, useState } from "react";
-import { createAccountWithEmailAndPassword, firebaseLoginWithEmailAndPassword } from "../../firebase/Auth";
+import { createAccountWithEmailAndPassword, firebaseLoginWithEmailAndPassword } from "../../../data/firebase/Auth";
 import { emailValidator, passwordValidator } from "../../validation/Validators";
-import { saveAccount } from "../../firebase/Firestore";
+import { saveAccount } from "../../../data/firebase/Firestore";
 
 export const RegisterScreen = ({ navigation }) => {
   const [mailValue, setMailValue] = useState("");
