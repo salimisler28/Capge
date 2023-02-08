@@ -3,28 +3,31 @@ import { Button, TextInput } from "@react-native-material/core";
 import { launchCamera } from "react-native-image-picker";
 import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { getAccountById } from "../../../data/firebase/Firestore";
-import { getCurrentUser } from "../../../data/firebase/Auth";
-import { uploadProfilePhoto } from "../../../data/firebase/Storage";
-import { logPlugin } from "@babel/preset-env/lib/debug";
-import storage from "@react-native-firebase/storage";
+import { getUser } from "../../../data/asyncstorage/User";
+import { loadImageUseCase } from "../../../domain/LoadImageUseCase";
 
 export const AccountScreen = ({ navigation }) => {
-  const [ppUri, setPpUri] = useState("");
-  const [currentUser, setCurrentUser] = useState({});
-
-  const [firstName, setFirstName] = useState("");
-  const [updatedName, setUpdatedName] = useState("");
+  const [id, setId] = useState(null);
+  const [mail, setMail] = useState(null);
+  const [ppUri, setPpUri] = useState(null);
+  const [firstName, setFirstName] = useState(null);
+  const [updatedName, setUpdatedName] = useState(null);
 
   useEffect(() => {
-    getAccountById(getCurrentUser().uid)
+    getUser()
       .then((data) => {
-        setCurrentUser(data);
-        if (data.name !== null) {
-          setFirstName(data.name);
-        }
+        console.log(JSON.stringify(data));
+        setId(data.id);
+        setMail(data.email);
+        setPpUri(data.pp_url);
+        setFirstName(data.name);
+        setUpdatedName(data.name);
       });
   }, []);
+
+  const loadImageToFirebase = async (uri) => {
+    await loadImageUseCase(uri);
+  };
 
   return (
     <View style={{
@@ -33,7 +36,7 @@ export const AccountScreen = ({ navigation }) => {
     }}>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         {
-          (ppUri == "") ?
+          (ppUri == null) ?
             (
               <Icon name="person" size={150} style={{
                 width: 150,
@@ -63,18 +66,15 @@ export const AccountScreen = ({ navigation }) => {
         onPress={() => {
           launchCamera(null)
             .then(async (result) => {
-              setPpUri(result.assets[0].uri)
-              await storage()
-                .ref(currentUser.id)
-                .child("deneme")
-                .putFile(result.assets[0].uri);
+              setPpUri(result.assets[0].uri);
+              await loadImageToFirebase(result.assets[0].uri);
             });
         }} />
 
       <TextInput
         focusable={false}
         editable={false}
-        value={currentUser.email}
+        value={mail}
         variant="outlined"
         label="Mail Address"
         style={{ marginTop: 60 }} />

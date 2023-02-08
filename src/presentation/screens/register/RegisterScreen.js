@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createAccountWithEmailAndPassword, firebaseLoginWithEmailAndPassword } from "../../../data/firebase/Auth";
 import { emailValidator, passwordValidator } from "../../validation/Validators";
 import { saveAccount } from "../../../data/firebase/Firestore";
+import { registerUseCase } from "../../../domain/AuthUseCases";
 
 export const RegisterScreen = ({ navigation }) => {
   const [mailValue, setMailValue] = useState("");
@@ -32,13 +33,7 @@ export const RegisterScreen = ({ navigation }) => {
     setRegisterLoading(true);
 
     if (emailValidator(mailValue) && passwordValidator(passValue)) {
-      createAccountWithEmailAndPassword(mail, password)
-        .then((response) => {
-          return saveAccount(response.user.uid, mail);
-        })
-        .then((response) => {
-          return firebaseLoginWithEmailAndPassword(mail, password);
-        })
+      registerUseCase(mail, password)
         .then((response) => {
           setRegisterSuccess(true);
           setRegisterLoading(false);

@@ -1,7 +1,12 @@
 import storage from "@react-native-firebase/storage";
 
-export const uploadProfilePhoto = (userId, fileUri) => {
+export const getPPRef = (userId) => {
   return storage()
     .ref(userId)
-    .putFile(fileUri)
+    .child("pp");
+};
+
+export const uploadProfilePhoto = (ref, fileUri) => {
+  return ref
+    .putFile(fileUri);
 };
