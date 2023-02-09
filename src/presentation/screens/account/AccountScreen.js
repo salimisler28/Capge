@@ -1,5 +1,6 @@
 import { Image, View } from "react-native";
-import { Button, TextInput } from "@react-native-material/core";
+import { Button } from "@react-native-material/core";
+import { CustomTextInput } from "../../customviews/CustomTextInput";
 import { launchCamera } from "react-native-image-picker";
 import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -76,22 +77,18 @@ export const AccountScreen = ({ navigation }) => {
             });
         }} />
 
-      <TextInput
-        focusable={false}
+      <CustomTextInput
         editable={false}
         value={mail}
         variant="outlined"
-        label="Mail Address"
         style={{ marginTop: 60 }} />
 
-      <TextInput
+      <CustomTextInput
         value={updatedName}
-        label="Your Name"
         onChangeText={(text) => {
           setUpdatedName(text);
         }}
         placeholder="Enter your name"
-        variant="outlined"
         style={{ marginTop: 20 }} />
 
       <Button

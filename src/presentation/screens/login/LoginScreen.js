@@ -1,11 +1,15 @@
-import { Image, Text, TextInput, ToastAndroid, TouchableOpacity, View, StyleSheet } from "react-native";
-import { Button } from "@react-native-material/core";
+import { Image, Text, TextInput, ToastAndroid, TouchableOpacity, View, Button, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
 import { emailValidator, passwordValidator } from "../../validation/Validators";
 import { loginUseCase } from "../../../domain/AuthUseCases";
 import { textInputStyle } from "../../style/TextInputStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN } from "../../redux/AuthActions";
+import { customButtonStyle } from "../../style/CustomButton";
+import { CustomButton } from "../../customviews/CustomButton";
+import { CustomPasswordInput, CustomTextInput } from "../../customviews/CustomTextInput";
+import { screenContainer } from "../../style/ScreenContainer";
+import { Size } from "../../style/Size";
 
 export const LoginScreen = ({ navigation }) => {
   const [mailValue, setMailValue] = useState("");
@@ -54,7 +58,7 @@ export const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, padding: 24, backgroundColor: "white" }}>
+    <ScrollView style={[screenContainer.container]}>
       <View style={{ alignItems: "center" }}>
         <Image
           style={{ width: 200, height: 200 }}
@@ -67,32 +71,32 @@ export const LoginScreen = ({ navigation }) => {
         justifyContent: "center",
         fontWeight: "bold",
         textAlign: "center",
-        marginTop: 48,
+        marginTop: Size.maxMarginTop,
       }}>Login</Text>
 
-      <TextInput
-        style={[textInputStyle.input, { marginTop: 24 }]}
+      <CustomTextInput
+        style={{ marginTop: Size.highMarginTop }}
         placeholder="Email"
         onChangeText={(text) => {
           setMailValue(text);
         }}
       />
 
-      <TextInput
-        style={[textInputStyle.input, { marginTop: 16 }]}
-        placeholder="Password"
+      <CustomPasswordInput
+        style={{ marginTop: Size.normalMarginTop }}
         secureTextEntry={true}
         onChangeText={(text) => {
           setPasswordValue(text);
         }} />
 
-      <Button
+      <CustomButton
+        style={{ marginTop: Size.highMarginTop }}
         title="Login"
-        disabled={loginLoading}
-        style={{ height: 56, justifyContent: "center", borderRadius: 12, marginTop: 24 }}
         onPress={() => {
           login(mailValue, passwordValue);
-        }} />
+        }}
+        disabled={loginLoading}
+      />
 
       <View style={{ flexDirection: "row", marginTop: 10 }}>
         <Text>Not registered yet.</Text>
@@ -100,9 +104,9 @@ export const LoginScreen = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("Register");
           }}>
-          <Text style={{ marginStart: 5, fontWeight: "bold" }}>Click here</Text>
+          <Text style={{ marginStart: 5, fontWeight: "bold", color: "green" }}>Click here</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
