@@ -1,10 +1,9 @@
-import { ToastAndroid, View } from "react-native";
-import { Button, TextInput } from "@react-native-material/core";
+import { TextInput, ToastAndroid, View } from "react-native";
+import { Button } from "@react-native-material/core";
 import { useEffect, useState } from "react";
-import { createAccountWithEmailAndPassword, firebaseLoginWithEmailAndPassword } from "../../../data/firebase/Auth";
 import { emailValidator, passwordValidator } from "../../validation/Validators";
-import { saveAccount } from "../../../data/firebase/Firestore";
 import { registerUseCase } from "../../../domain/AuthUseCases";
+import { textInputStyle } from "../../style/TextInputStyle";
 
 export const RegisterScreen = ({ navigation }) => {
   const [mailValue, setMailValue] = useState("");
@@ -49,15 +48,24 @@ export const RegisterScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <TextInput placeholder="Email address" onChangeText={(text) => {
-        setMailValue(text);
-      }} />
-      <TextInput placeholder="Password at least 6 char" onChangeText={(text) => {
-        setPassValue(text);
-      }} />
-      <Button title="Register" onPress={() => {
-        register(mailValue, passValue);
-      }} />
+      <TextInput
+        style={[textInputStyle.input, {}]}
+        placeholder="Email address"
+        onChangeText={(text) => {
+          setMailValue(text);
+        }} />
+
+      <TextInput
+        style={[textInputStyle.input, {}]}
+        placeholder="Password at least 6 char"
+        onChangeText={(text) => {
+          setPassValue(text);
+        }} />
+      <Button
+        title="Register"
+        onPress={() => {
+          register(mailValue, passValue);
+        }} />
     </View>
   );
 };

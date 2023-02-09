@@ -3,6 +3,9 @@ import { Button } from "@react-native-material/core";
 import { useEffect, useState } from "react";
 import { emailValidator, passwordValidator } from "../../validation/Validators";
 import { loginUseCase } from "../../../domain/AuthUseCases";
+import { textInputStyle } from "../../style/TextInputStyle";
+import { useDispatch, useSelector } from "react-redux";
+import { LOGIN } from "../../redux/AuthActions";
 
 export const LoginScreen = ({ navigation }) => {
   const [mailValue, setMailValue] = useState("");
@@ -13,6 +16,9 @@ export const LoginScreen = ({ navigation }) => {
 
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+
   useEffect(() => {
     if (errorMessage != null) {
       ToastAndroid.show(errorMessage.toString(), ToastAndroid.SHORT);
@@ -22,7 +28,7 @@ export const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (loginSuccess === true) {
-      navigation.navigate("Bottom");
+      // navigation.navigate("Bottom");
     }
   }, [loginSuccess]);
 
@@ -34,6 +40,7 @@ export const LoginScreen = ({ navigation }) => {
         .then(() => {
           setLoginLoading(false);
           setLoginSuccess(true);
+          dispatch(LOGIN());
         })
         .catch((error) => {
           setErrorMessage(error);
@@ -47,17 +54,24 @@ export const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, padding: 24, backgroundColor: "white", justifyContent: "center" }}>
+    <View style={{ flex: 1, padding: 24, backgroundColor: "white" }}>
       <View style={{ alignItems: "center" }}>
         <Image
-          style={{ width: 200, height: 200, marginBottom: 50 }}
+          style={{ width: 200, height: 200 }}
           source={require("../../../../assets/splash.png")} />
       </View>
 
-      <Text style={{ fontSize: 22 }}>Login</Text>
+      <Text style={{
+        fontSize: 22,
+        alignItems: "center",
+        justifyContent: "center",
+        fontWeight: "bold",
+        textAlign: "center",
+        marginTop: 48,
+      }}>Login</Text>
 
       <TextInput
-        style={[styles.input, {}]}
+        style={[textInputStyle.input, { marginTop: 24 }]}
         placeholder="Email"
         onChangeText={(text) => {
           setMailValue(text);
@@ -65,7 +79,7 @@ export const LoginScreen = ({ navigation }) => {
       />
 
       <TextInput
-        style={[styles.input, {}]}
+        style={[textInputStyle.input, { marginTop: 16 }]}
         placeholder="Password"
         secureTextEntry={true}
         onChangeText={(text) => {
@@ -75,7 +89,7 @@ export const LoginScreen = ({ navigation }) => {
       <Button
         title="Login"
         disabled={loginLoading}
-        style={{ height: 56, justifyContent: "center", borderRadius: 12, marginTop: 20 }}
+        style={{ height: 56, justifyContent: "center", borderRadius: 12, marginTop: 24 }}
         onPress={() => {
           login(mailValue, passwordValue);
         }} />
@@ -92,12 +106,3 @@ export const LoginScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    marginTop: 15,
-    padding: 15,
-    backgroundColor: "#eeeeee",
-    borderRadius: 15,
-  },
-});

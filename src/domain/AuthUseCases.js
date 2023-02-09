@@ -1,10 +1,10 @@
 import {
   createAccountWithEmailAndPassword,
   firebaseLoginWithEmailAndPassword,
-  getCurrentUser,
+  getCurrentUser, signOut,
 } from "../data/firebase/Auth";
 import { getAccountById, saveAccount } from "../data/firebase/Firestore";
-import { saveUser } from "../data/asyncstorage/User";
+import { removeUser, saveUser } from "../data/asyncstorage/User";
 
 export const loginUseCase = (email, password) => {
   return Promise.resolve()
@@ -39,4 +39,14 @@ export const getCurrentUserDetailUseCase = () => {
   } else {
     return Promise.resolve(null);
   }
+};
+
+export const signOutUseCase = () => {
+  return Promise.resolve()
+    .then((r) => {
+      return signOut();
+    })
+    .then((r) => {
+      return removeUser();
+    });
 };

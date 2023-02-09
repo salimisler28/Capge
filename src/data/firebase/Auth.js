@@ -14,3 +14,8 @@ export const getCurrentUser = () => {
   return auth()
     .currentUser;
 };
+
+export const signOut = () => {
+  return auth()
+    .signOut()
+}

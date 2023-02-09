@@ -12,3 +12,7 @@ export const getUser = () => {
       return JSON.parse(result);
     });
 };
+
+export const removeUser = () => {
+  return AsyncStorage.removeItem(KEY_USER);
+};

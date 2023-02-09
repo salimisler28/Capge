@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getUser } from "../../../data/asyncstorage/User";
 import { loadImageUseCase } from "../../../domain/LoadImageUseCase";
+import { signOut } from "../../../data/firebase/Auth";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../redux/AuthActions";
 
 export const AccountScreen = ({ navigation }) => {
   const [id, setId] = useState(null);
@@ -12,6 +15,8 @@ export const AccountScreen = ({ navigation }) => {
   const [ppUri, setPpUri] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [updatedName, setUpdatedName] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getUser()
@@ -92,6 +97,17 @@ export const AccountScreen = ({ navigation }) => {
       <Button
         disabled={firstName === updatedName}
         title="Update Your Profile" />
+
+      <Button
+        style={{ backgroundColor: "red", marginTop: 60 }}
+        title="Sign Out"
+        onPress={() => {
+          signOut()
+            .then(r => {
+              dispatch(LOGOUT());
+            });
+        }}
+      />
     </View>
   );
 };
