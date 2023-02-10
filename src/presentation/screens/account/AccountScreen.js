@@ -1,6 +1,5 @@
-import { Image, View } from "react-native";
-import { Button } from "@react-native-material/core";
-import { CustomTextInput } from "../../customviews/CustomTextInput";
+import { Image, ScrollView, View } from "react-native";
+import { Button, TextInput } from "@react-native-material/core";
 import { launchCamera } from "react-native-image-picker";
 import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -9,6 +8,8 @@ import { loadImageUseCase } from "../../../domain/LoadImageUseCase";
 import { signOut } from "../../../data/firebase/Auth";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../redux/AuthActions";
+import { signOutUseCase } from "../../../domain/AuthUseCases";
+import { setName } from "../../../data/firebase/Firestore";
 
 export const AccountScreen = ({ navigation }) => {
   const [id, setId] = useState(null);
@@ -16,6 +17,7 @@ export const AccountScreen = ({ navigation }) => {
   const [ppUri, setPpUri] = useState(null);
   const [firstName, setFirstName] = useState(null);
   const [updatedName, setUpdatedName] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -31,12 +33,16 @@ export const AccountScreen = ({ navigation }) => {
       });
   }, []);
 
+  useEffect(() => {
+
+  });
+
   const loadImageToFirebase = async (uri) => {
     await loadImageUseCase(uri);
   };
 
   return (
-    <View style={{
+    <ScrollView style={{
       flex: 1,
       padding: 24,
     }}>
@@ -72,39 +78,47 @@ export const AccountScreen = ({ navigation }) => {
         onPress={() => {
           launchCamera(null)
             .then(async (result) => {
-              setPpUri(result.assets[0].uri);
-              await loadImageToFirebase(result.assets[0].uri);
+              if (!result.didCancel) {
+                setPpUri(result.assets[0].uri);
+                await loadImageToFirebase(result.assets[0].uri);
+              }
             });
         }} />
 
-      <CustomTextInput
+      <TextInput
         editable={false}
         value={mail}
+        label="Email Address"
         variant="outlined"
         style={{ marginTop: 60 }} />
 
-      <CustomTextInput
+      <TextInput
         value={updatedName}
         onChangeText={(text) => {
           setUpdatedName(text);
         }}
+        label="Name"
+        variant="outlined"
         placeholder="Enter your name"
         style={{ marginTop: 20 }} />
 
       <Button
         disabled={firstName === updatedName}
-        title="Update Your Profile" />
+        title="Update Your Name"
+        onPress={async () => {
+          await setName(id, updatedName);
+        }} />
 
       <Button
         style={{ backgroundColor: "red", marginTop: 60 }}
         title="Sign Out"
         onPress={() => {
-          signOut()
+          signOutUseCase()
             .then(r => {
               dispatch(LOGOUT());
             });
         }}
       />
-    </View>
+    </ScrollView>
   );
 };

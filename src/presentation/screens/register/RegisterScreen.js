@@ -98,6 +98,7 @@ export const RegisterScreen = ({ navigation }) => {
       <CustomTextInput
         style={{ marginTop: Size.highMarginTop }}
         placeholder="Email address"
+        value={mailValue}
         onChangeText={(text) => {
           setMailValue(text);
         }}
@@ -106,6 +107,7 @@ export const RegisterScreen = ({ navigation }) => {
       <CustomPasswordInput
         style={{ marginTop: Size.normalMarginTop }}
         placeholder="Password at least 6 char"
+        value={passValue}
         onChangeText={(text) => {
           setPassValue(text);
         }}
@@ -114,6 +116,7 @@ export const RegisterScreen = ({ navigation }) => {
       <CustomPasswordInput
         style={{ marginTop: Size.normalMarginTop }}
         placeholder="Repeat Your Password"
+        value={passRepeatValue}
         onChangeText={(text) => {
           setPassRepeatValue(text);
         }}

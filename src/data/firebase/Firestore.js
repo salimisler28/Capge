@@ -28,3 +28,12 @@ export const setUserProfilePhotoUrl = (userId, url) => {
       pp_url: url,
     });
 };
+
+export const setName = (userId, name) => {
+  return firestore()
+    .collection("users")
+    .doc(userId)
+    .update({
+      name: name,
+    });
+};

@@ -39,22 +39,32 @@ export const LoginScreen = ({ navigation }) => {
   const login = (email, password) => {
     setLoginLoading(true);
 
-    if (emailValidator(mailValue) && passwordValidator(passwordValue)) {
-      loginUseCase(email, password)
-        .then(() => {
-          setLoginLoading(false);
-          setLoginSuccess(true);
-          dispatch(LOGIN());
-        })
-        .catch((error) => {
-          setErrorMessage(error);
-          setLoginSuccess(false);
-          setLoginLoading(false);
-        });
-    } else {
+    let emailValidationResult = emailValidator(mailValue);
+    let passwordValidationResult = passwordValidator(passwordValue);
+
+    if (!emailValidationResult.result) {
       setLoginLoading(false);
-      setErrorMessage("Validation failed");
+      setErrorMessage(emailValidationResult.message);
+      return;
     }
+
+    if (!passwordValidationResult.result) {
+      setLoginLoading(false);
+      setErrorMessage(passwordValidationResult.message);
+      return;
+    }
+
+    loginUseCase(email, password)
+      .then(() => {
+        setLoginLoading(false);
+        setLoginSuccess(true);
+        dispatch(LOGIN());
+      })
+      .catch((error) => {
+        setErrorMessage(error);
+        setLoginSuccess(false);
+        setLoginLoading(false);
+      });
   };
 
   return (
@@ -77,6 +87,7 @@ export const LoginScreen = ({ navigation }) => {
       <CustomTextInput
         style={{ marginTop: Size.highMarginTop }}
         placeholder="Email"
+        value={mailValue}
         onChangeText={(text) => {
           setMailValue(text);
         }}

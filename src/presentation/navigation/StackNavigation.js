@@ -12,35 +12,38 @@ const Stack = createStackNavigator();
 export const StackNavigation = ({ isLoggedIn }) => {
   const auth = useSelector(state => state.auth);
 
-  if (auth.isLoggedIn) return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={Bottom}
-        component={BottomNavigation}
-        options={{
-          headerShown: false,
-        }} />
-      <Stack.Screen
-        name={CharDetail}
-        component={CharDetailScreen}
-        options={{
-          headerShown: true,
-        }} />
-    </Stack.Navigator>
-  );
-  else return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={Login}
-        component={LoginScreen}
-        options={{
-          headerShown: false,
-        }} />
-      <Stack.Screen
-        name={Register}
-        component={RegisterScreen} />
-    </Stack.Navigator>
-  );
+  if (auth.isLoggedIn) {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name={Bottom}
+          component={BottomNavigation}
+          options={{
+            headerShown: false,
+          }} />
+        <Stack.Screen
+          name={CharDetail}
+          component={CharDetailScreen}
+          options={{
+            headerShown: true,
+          }} />
+      </Stack.Navigator>
+    );
+  } else {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name={Login}
+          component={LoginScreen}
+          options={{
+            headerShown: false,
+          }} />
+        <Stack.Screen
+          name={Register}
+          component={RegisterScreen} />
+      </Stack.Navigator>
+    );
+  }
 
 
   // return (

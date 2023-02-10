@@ -17,5 +17,5 @@ export const getCurrentUser = () => {
 
 export const signOut = () => {
   return auth()
-    .signOut()
-}
+    .signOut();
+};
