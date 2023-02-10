@@ -18,7 +18,7 @@ Screen, Managing states, Storing data, Navigation between screens etc.
 ### 8. React Native Navigation 6
 ### 9. ImagePicker
 ### 10. Axios
-### 11. Axios
+### 11. Async Storage
 
 ## Screens that we have
 ### 1. Login Screen
