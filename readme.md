@@ -2,7 +2,7 @@
 
 You can see all rick and morty characters and add to your favorite list.
 
-## The purpose of this react native applications
+## The purpose of this react native application
 
 My purpose in this application is to learn the basics of react native and how to create Splash Screen, Paging List
 Screen, Managing states, Storing data etc.
