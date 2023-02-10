@@ -8,15 +8,15 @@ My purpose in this application is to learn the basics of react native and how to
 Screen, Managing states, Storing data, Navigation between screens etc.
 
 ## Technologies that I used in the application
-### 1. React Native CLI
-### 2. Redux
-### 3. Redux Persist
-### 4. Firebase Firestore
-### 5. Firebase Auth
-### 6. Firebase Storage
-### 7. React Native Material Design
-### 8. React Native Navigation 6
-### 9. ImagePicker
+### 1.  React Native CLI
+### 2.  Redux
+### 3.  Redux Persist
+### 4.  Firebase Firestore
+### 5.  Firebase Auth
+### 6.  Firebase Storage
+### 7.  React Native Material Design
+### 8.  React Native Navigation 6
+### 9.  ImagePicker
 ### 10. Axios
 ### 11. Async Storage
 
