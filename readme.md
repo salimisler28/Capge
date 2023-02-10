@@ -5,7 +5,7 @@ You can see all rick and morty characters and add to your favorite list.
 ## The purpose of this react native application
 
 My purpose in this application is to learn the basics of react native and how to create Splash Screen, Paging List
-Screen, Managing states, Storing data etc.
+Screen, Managing states, Storing data, Navigation between screens etc.
 
 ## Technologies that I used in the application
 ### 1. React Native CLI
@@ -18,6 +18,7 @@ Screen, Managing states, Storing data etc.
 ### 8. React Native Navigation 6
 ### 9. ImagePicker
 ### 10. Axios
+### 11. Axios
 
 ## Screens that we have
 ### 1. Login Screen
