@@ -1,7 +1,7 @@
-import { Image, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import { Button } from "@react-native-material/core";
-import { launchCamera } from "react-native-image-picker";
-import { useEffect, useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
+import { IconButton } from "@react-native-material/core";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getUser } from "../../../data/asyncstorage/User";
 import { loadImageUseCase } from "../../../domain/LoadImageUseCase";
@@ -11,6 +11,8 @@ import { signOutUseCase } from "../../../domain/AuthUseCases";
 import { setName } from "../../../data/firebase/Firestore";
 import { useTheme } from "@react-navigation/native";
 import { Size } from "../../style/Size";
+import { customButtonStyle } from "../../style/CustomButton";
+import { CustomButton } from "../../customviews/CustomButton";
 
 export const AccountScreen = ({ navigation }) => {
   const { colors } = useTheme();
@@ -42,6 +44,26 @@ export const AccountScreen = ({ navigation }) => {
 
   const loadImageToFirebase = async (uri) => {
     await loadImageUseCase(uri);
+  };
+
+  const _launchCamera = async () => {
+    return launchCamera(null)
+      .then(async (result) => {
+        if (!result.didCancel) {
+          setPpUri(result.assets[0].uri);
+          await loadImageUseCase(result.assets[0].uri);
+        }
+      });
+  };
+
+  const _launchGallery = async () => {
+    return launchImageLibrary(null)
+      .then(async (result) => {
+        if (!result.didCancel) {
+          setPpUri(result.assets[0].uri);
+          await loadImageUseCase(result.assets[0].uri);
+        }
+      });
   };
 
   return (
@@ -79,18 +101,22 @@ export const AccountScreen = ({ navigation }) => {
         }
       </View>
 
-      <Button
-        title="Update Profile Photo"
-        style={{ marginHorizontal: 40, marginTop: 10 }}
-        onPress={() => {
-          launchCamera(null)
-            .then(async (result) => {
-              if (!result.didCancel) {
-                setPpUri(result.assets[0].uri);
-                await loadImageToFirebase(result.assets[0].uri);
-              }
-            });
-        }} />
+      <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
+        <IconButton
+          icon={props => <Icon name="camera" style={{ color: "red" }} {...props} />}
+          style={{ backgroundColor: colors.itemBackgroundColor }}
+          onPress={async () => {
+            await _launchCamera();
+          }}
+        />
+        <IconButton
+          icon={props => <Icon name="image" style={{ color: "red" }} {...props} />}
+          style={{ backgroundColor: colors.itemBackgroundColor }}
+          onPress={async () => {
+            await _launchGallery();
+          }}
+        />
+      </View>
 
       <Text
         style={{
@@ -104,7 +130,7 @@ export const AccountScreen = ({ navigation }) => {
         style={[styles.input, {
           backgroundColor: colors.itemBackgroundColor,
           color: colors.textColor1,
-          marginTop: Size.normalMarginTop
+          marginTop: Size.normalMarginTop,
         }]} />
 
       <Text
@@ -125,24 +151,48 @@ export const AccountScreen = ({ navigation }) => {
           marginTop: Size.normalMarginTop,
         }]} />
 
-      <Button
-        disabled={firstName === updatedName}
-        style={{ marginTop: Size.highMarginTop }}
+      <CustomButton
         title="Update Your Name"
-        onPress={async () => {
-          await setName(id, updatedName);
+        style={{
+          marginTop: Size.highMarginTop,
+          backgroundColor: (firstName === updatedName) ? "gray" : "green",
+        }}
+        onPress={() => {
+          if (firstName !== updatedName) {
+            setName(id, updatedName)
+              .then(() => {
+                setFirstName(updatedName);
+              });
+          } else {
+            ToastAndroid.show("You should update change name", ToastAndroid.SHORT);
+          }
         }} />
 
-      <Button
-        style={{ backgroundColor: "red", marginTop: 60 }}
+      <CustomButton
         title="Sign Out"
-        onPress={() => {
+        style={{ marginTop: 60, backgroundColor: "red" }}
+        onPress={async () => {
           signOutUseCase()
             .then(r => {
               dispatch(LOGOUT());
             });
-        }}
-      />
+        }} />
+
+      {/*<Button*/}
+      {/*  disabled={firstName === updatedName}*/}
+      {/*  style={{ marginTop: Size.highMarginTop }}*/}
+      {/*  title="Update Your Name"*/}
+      {/*  onPress={async () => {*/}
+      {/*    await setName(id, updatedName);*/}
+      {/*  }} />*/}
+
+      {/*<Button*/}
+      {/*  style={{ backgroundColor: "red", marginTop: 60 }}*/}
+      {/*  title="Sign Out"*/}
+      {/*  onPress={() => {*/}
+
+      {/*  }}*/}
+      {/*/>*/}
     </ScrollView>
   );
 };
