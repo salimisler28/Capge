@@ -26,3 +26,7 @@ Screen, Managing states, Storing data, Navigation between screens etc.
 ### 3. Character List Screen
 ### 4. Fav List Screen
 ### 5. Account Screen
+
+## What can we improve?
+### 1. Animation
+### 2. Better design
