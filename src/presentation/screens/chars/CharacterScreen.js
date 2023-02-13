@@ -8,9 +8,10 @@ import { CharDetail } from "../../constants/Screens";
 import { useTheme } from "@react-navigation/native";
 
 const newPageLoadingComponent = () => {
+  const { colors } = useTheme();
   return (
     <View style={{ alignItems: "center", justifyContent: "center", padding: 20 }}>
-      <Text>Loading</Text>
+      <Text style={{ color: colors.textColor1 }}>Loading</Text>
     </View>
   );
 };
@@ -81,7 +82,11 @@ export const CharacterScreen = ({ navigation }) => {
               }}
             />;
           }}
-          ListFooterComponent={newPageLoading ? newPageLoadingComponent : ""}
+          ListFooterComponent={() => {
+            if (newPageLoading) {
+              return newPageLoadingComponent();
+            }
+          }}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             if (!mainLoading && !newPageLoading && page < totalPage) {
