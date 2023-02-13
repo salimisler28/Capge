@@ -8,8 +8,13 @@ import auth from "@react-native-firebase/auth";
 import RNBootSplash from "react-native-bootsplash";
 import { saveUser } from "./src/data/asyncstorage/User";
 import { getCurrentUserDetailUseCase } from "./src/domain/AuthUseCases";
+import { useColorScheme } from "react-native";
+import { darkTheme } from "@react-native-material/core";
+import { lightTheme } from "./src/presentation/style/Themes";
 
 const App = () => {
+  const theme = useColorScheme();
+
   useEffect(() => {
     getCurrentUserDetailUseCase()
       .then((result) => {
@@ -28,7 +33,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistore}>
-        <NavigationContainer>
+        <NavigationContainer theme={theme == "dark" ? darkTheme : lightTheme}>
           <StackNavigation />
         </NavigationContainer>
       </PersistGate>

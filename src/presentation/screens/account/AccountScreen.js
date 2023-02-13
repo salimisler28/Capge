@@ -1,17 +1,20 @@
-import { Image, ScrollView, View } from "react-native";
-import { Button, TextInput } from "@react-native-material/core";
+import { Image, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button } from "@react-native-material/core";
 import { launchCamera } from "react-native-image-picker";
 import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { getUser } from "../../../data/asyncstorage/User";
 import { loadImageUseCase } from "../../../domain/LoadImageUseCase";
-import { signOut } from "../../../data/firebase/Auth";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../redux/AuthActions";
 import { signOutUseCase } from "../../../domain/AuthUseCases";
 import { setName } from "../../../data/firebase/Firestore";
+import { useTheme } from "@react-navigation/native";
+import { Size } from "../../style/Size";
 
 export const AccountScreen = ({ navigation }) => {
+  const { colors } = useTheme();
+
   const [id, setId] = useState(null);
   const [mail, setMail] = useState(null);
   const [ppUri, setPpUri] = useState(null);
@@ -44,9 +47,13 @@ export const AccountScreen = ({ navigation }) => {
   return (
     <ScrollView style={{
       flex: 1,
-      padding: 24,
+      paddingHorizontal: 24,
     }}>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
+      <View style={{
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: Size.maxMarginTop,
+      }}>
         {
           (ppUri == null) ?
             (
@@ -85,25 +92,42 @@ export const AccountScreen = ({ navigation }) => {
             });
         }} />
 
+      <Text
+        style={{
+          marginTop: Size.highMarginTop,
+          color: colors.textColor1,
+        }}>Email Address</Text>
+
       <TextInput
         editable={false}
         value={mail}
-        label="Email Address"
-        variant="outlined"
-        style={{ marginTop: 60 }} />
+        style={[styles.input, {
+          backgroundColor: colors.itemBackgroundColor,
+          color: colors.textColor1,
+          marginTop: Size.normalMarginTop
+        }]} />
+
+      <Text
+        style={{
+          marginTop: Size.highMarginTop,
+          color: colors.textColor1,
+        }}>Name</Text>
 
       <TextInput
         value={updatedName}
         onChangeText={(text) => {
           setUpdatedName(text);
         }}
-        label="Name"
-        variant="outlined"
         placeholder="Enter your name"
-        style={{ marginTop: 20 }} />
+        style={[styles.input, {
+          backgroundColor: colors.itemBackgroundColor,
+          color: colors.textColor1,
+          marginTop: Size.normalMarginTop,
+        }]} />
 
       <Button
         disabled={firstName === updatedName}
+        style={{ marginTop: Size.highMarginTop }}
         title="Update Your Name"
         onPress={async () => {
           await setName(id, updatedName);
@@ -122,3 +146,10 @@ export const AccountScreen = ({ navigation }) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    padding: 15,
+    borderRadius: 12,
+  },
+});

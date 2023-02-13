@@ -1,11 +1,9 @@
-import { Image, Text, TextInput, ToastAndroid, TouchableOpacity, View, Button, ScrollView } from "react-native";
+import { Image, ScrollView, Text, ToastAndroid, TouchableOpacity, View } from "react-native";
 import { useEffect, useState } from "react";
 import { emailValidator, passwordValidator } from "../../validation/Validators";
 import { loginUseCase } from "../../../domain/AuthUseCases";
-import { textInputStyle } from "../../style/TextInputStyle";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN } from "../../redux/AuthActions";
-import { customButtonStyle } from "../../style/CustomButton";
 import { CustomButton } from "../../customviews/CustomButton";
 import { CustomPasswordInput, CustomTextInput } from "../../customviews/CustomTextInput";
 import { screenContainer } from "../../style/ScreenContainer";

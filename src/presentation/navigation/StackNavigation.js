@@ -1,11 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { BottomNavigation } from "./BottomNavigation";
-import { CharDetailScreen } from "../screens/chardetail/PostsDetail";
+import { CharDetailScreen } from "../screens/chardetail/CharDetaiScreenl";
 import { LoginScreen } from "../screens/login/LoginScreen";
 import { RegisterScreen } from "../screens/register/RegisterScreen";
 import { Bottom, CharDetail, Login, Register } from "../constants/Screens";
 import { useSelector } from "react-redux";
+import { useTheme } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,10 @@ export const StackNavigation = ({ isLoggedIn }) => {
           component={CharDetailScreen}
           options={{
             headerShown: true,
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              color: "#fff",
+            },
           }} />
       </Stack.Navigator>
     );

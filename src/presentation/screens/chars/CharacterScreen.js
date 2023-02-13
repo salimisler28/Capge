@@ -5,6 +5,7 @@ import { CharItem } from "./CharItem";
 import { useDispatch, useSelector } from "react-redux";
 import { ADD_FAV, REMOVE_FAV } from "../../redux/FavsActions";
 import { CharDetail } from "../../constants/Screens";
+import { useTheme } from "@react-navigation/native";
 
 const newPageLoadingComponent = () => {
   return (
@@ -15,6 +16,7 @@ const newPageLoadingComponent = () => {
 };
 
 export const CharacterScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const dispatch = useDispatch();
   const favs = useSelector(state => state.favs);
 
@@ -23,10 +25,6 @@ export const CharacterScreen = ({ navigation }) => {
   const [chars, setChars] = useState([]);
 
   const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    console.log(favs);
-  }, [favs]);
 
   useEffect(() => {
     if (page === 1) {
@@ -61,6 +59,7 @@ export const CharacterScreen = ({ navigation }) => {
     return (
       <View style={{ flex: 1 }}>
         <FlatList
+          style={{ backgroundColor: colors.background }}
           data={chars}
           keyExtractor={(item, index) => {
             return index.toString();

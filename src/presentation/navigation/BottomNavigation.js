@@ -8,7 +8,12 @@ import { AccountScreen } from "../screens/account/AccountScreen";
 const Bottom = createBottomTabNavigator();
 
 export const BottomNavigation = () => {
-  return (<Bottom.Navigator>
+  return (<Bottom.Navigator screenOptions={{
+    tabBarInactiveTintColor: "white",
+    tabBarActiveTintColor: "green",
+    tabBarActiveBackgroundColor: "black",
+    tabBarInactiveBackgroundColor: "black",
+  }}>
     <Bottom.Screen
       component={CharacterScreen}
       name={Character}
@@ -33,3 +38,24 @@ export const BottomNavigation = () => {
       }} />
   </Bottom.Navigator>);
 };
+
+//
+// let iconName;
+// let iconColor;
+//
+// if (route.name === Character) {
+//   iconName = "home";
+//   iconColor = focused ? "green" : "gray";
+// } else if (route.name === Favs) {
+//   iconName = "favorite";
+//   iconColor = focused ? "green" : "gray";
+// } else if (route.name === Account) {
+//   iconName = "person";
+//   iconColor = focused ? "green" : "gray";
+// }
+//
+// return (
+//   <Icon
+//     name={iconName}
+//     style={{ color: iconColor, width: 43, aspectRatio: 1 }} />
+// );
