@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ADD_FAV, REMOVE_FAV } from "../../redux/FavsActions";
 import { CharDetail } from "../../constants/Screens";
 import { useTheme } from "@react-navigation/native";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import LinearGradient from "react-native-linear-gradient";
 
 const newPageLoadingComponent = () => {
   const { colors } = useTheme();
@@ -15,6 +17,8 @@ const newPageLoadingComponent = () => {
     </View>
   );
 };
+
+const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 export const CharacterScreen = ({ navigation }) => {
   const { colors } = useTheme();
@@ -52,22 +56,36 @@ export const CharacterScreen = ({ navigation }) => {
       });
   }, [page]);
 
-  if (mainLoading) {
-    return (
-      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-        <Text>Loading</Text>
-      </View>
-    );
-  } else {
-    return (
-      <View style={{ flex: 1 }}>
-        <FlatList
-          style={{ backgroundColor: colors.background }}
-          data={chars}
-          keyExtractor={(item, index) => {
-            return index.toString();
-          }}
-          renderItem={({ item }) => {
+  return (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        style={{ backgroundColor: colors.background }}
+        data={mainLoading ? [1, 1, 1, 1, 1, 1, 1, 1, 1] : chars}
+        keyExtractor={(item, index) => {
+          return index.toString();
+        }}
+        renderItem={({ item }) => {
+          if (mainLoading) {
+            return <View style={{ flex: 1, flexDirection: "row" }}>
+              <ShimmerPlaceHolder
+                style={{
+                  height: 100,
+                  width: 100,
+                  borderRadius: 12,
+                  margin: 15,
+                }}
+                shimmerColors={[colors.background, colors.itemBackgroundColor, colors.textColor1]}
+              />
+              <ShimmerPlaceHolder
+                style={{
+                  height: 20,
+                  borderRadius: 12,
+                  margin: 15,
+                }}
+                shimmerColors={[colors.background, colors.itemBackgroundColor, colors.textColor1]}
+              />
+            </View>;
+          } else {
             return <CharItem
               char={item}
               isFavVisible={true}
@@ -81,20 +99,20 @@ export const CharacterScreen = ({ navigation }) => {
                 else dispatch(REMOVE_FAV(char.id));
               }}
             />;
-          }}
-          ListFooterComponent={() => {
-            if (newPageLoading) {
-              return newPageLoadingComponent();
-            }
-          }}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => {
-            if (!mainLoading && !newPageLoading && page < totalPage) {
-              setPage(page + 1);
-            }
-          }}
-        />
-      </View>
-    );
-  }
+          }
+        }}
+        ListFooterComponent={() => {
+          if (newPageLoading) {
+            return newPageLoadingComponent();
+          }
+        }}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => {
+          if (!mainLoading && !newPageLoading && page < totalPage) {
+            setPage(page + 1);
+          }
+        }}
+      />
+    </View>
+  );
 };
