@@ -25,6 +25,7 @@ export const CharacterScreen = ({ navigation }) => {
   const [chars, setChars] = useState([]);
 
   const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
     if (page === 1) {
@@ -37,6 +38,7 @@ export const CharacterScreen = ({ navigation }) => {
       .then((response) => {
         if (page === 1) {
           setChars(response.data.results);
+          setTotalPage(response.data.info.pages);
           setMainLoading(false);
         } else {
           const newList2 = [...chars, ...response.data.results];
@@ -82,7 +84,7 @@ export const CharacterScreen = ({ navigation }) => {
           ListFooterComponent={newPageLoading ? newPageLoadingComponent : ""}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
-            if (!mainLoading && !newPageLoading) {
+            if (!mainLoading && !newPageLoading && page < totalPage) {
               setPage(page + 1);
             }
           }}
