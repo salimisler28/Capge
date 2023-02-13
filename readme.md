@@ -29,4 +29,8 @@ Screen, Managing states, Storing data, Navigation between screens etc.
 
 ## What can we improve?
 ### 1. Animation
-### 2. Better design
+### 2. A better design
+### 3. TypeScript
+
+## Notes
+#### You should run the application on a real device in order to upload profile image to server.
